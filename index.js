@@ -12,6 +12,7 @@ const {
   GatewayIntentBits,
 } = require('discord.js');
 const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
+
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
 
 const {
@@ -19,7 +20,7 @@ const {
   ROLE_5,
   ROLE_10,
   ROLE_15,
-  ROLE_20,
+  ROLE_20, // Se deja por compatibilidad aunque ahora no se use
 } = process.env;
 
 if (!DISCORD_TOKEN) {
@@ -38,6 +39,8 @@ const PRIZES = [
   { label: '10%', roleId: ROLE_10 || null },
   { label: '15%', roleId: ROLE_15 || null },
   { label: 'VIP', roleId: null },
+  // Si luego quieres usar 20%, agrégalo aquí:
+  // { label: '20%', roleId: ROLE_20 || null },
 ];
 
 const games = new Map();
@@ -65,11 +68,14 @@ function createBoard() {
     roleId: prize.roleId,
   }));
 
-  const skulls = Array.from({ length: TOTAL_CELLS - prizes.length }, () => ({
-    kind: 'skull',
-    label: '☠',
-    roleId: null,
-  }));
+  const skulls = Array.from(
+    { length: TOTAL_CELLS - prizes.length },
+    () => ({
+      kind: 'skull',
+      label: 'X',
+      roleId: null,
+    }),
+  );
 
   return shuffle([...prizes, ...skulls]);
 }
@@ -127,14 +133,7 @@ function drawCenteredText(ctx, text, x, y, width, height, font, color) {
   ctx.fillStyle = color;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
-
-  let offsetY = 0;
-
-  if (text === '☠️') {
-    offsetY = +4;
-  }
-
-  ctx.fillText(text, x + width / 2, y + height / 2 + offsetY);
+  ctx.fillText(text, x + width / 2, y + height / 2);
   ctx.restore();
 }
 
@@ -156,69 +155,86 @@ async function renderBoard(game, { reveal = false } = {}) {
   const boardPixels =
     PADDING * 2 + BOARD_SIZE * CELL_SIZE + (BOARD_SIZE - 1) * GAP;
 
-  const canvasSize = boardPixels;
-  const canvas = createCanvas(canvasSize, canvasSize + HEADER_HEIGHT);
+  const canvas = createCanvas(boardPixels, boardPixels + HEADER_HEIGHT);
   const ctx = canvas.getContext('2d');
 
+  // Fondo general
   ctx.fillStyle = '#07111f';
-ctx.fillRect(0, 0, canvas.width, canvas.height);
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-ctx.fillStyle = '#0b1b2b';
-ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
+  // Header
+  ctx.fillStyle = '#0b1b2b';
+  ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
 
-ctx.fillStyle = '#ffffff';
-ctx.font = 'bold 50px sans-serif';
-ctx.textAlign = 'center';
-ctx.textBaseline = 'middle';
-ctx.fillText('TEST', canvas.width / 2, 32);
+  drawCenteredText(
+    ctx,
+    'SCRATCH & WIN!',
+    0,
+    0,
+    canvas.width,
+    HEADER_HEIGHT,
+    '50px Anton',
+    '#ffffff',
+  );
 
- ctx.fillStyle = '#2c719a';
-roundRect(
-  ctx,
-  14,
-  HEADER_HEIGHT + 10,
-  canvas.width - 28,
-  canvas.height - HEADER_HEIGHT - 27,
-  18,
-);
-ctx.fillStyle = 'rgb(255, 0, 0)';
-ctx.fillRect(30, HEADER_HEIGHT + 30, 120, 40);
+  // Marco exterior
+  roundRect(
+    ctx,
+    14,
+    HEADER_HEIGHT + 10,
+    canvas.width - 28,
+    canvas.height - HEADER_HEIGHT - 24,
+    18,
+  );
+  ctx.fillStyle = '#2c719a';
+  ctx.fill();
+
+  // Fondo interior
+  roundRect(
+    ctx,
+    24,
+    HEADER_HEIGHT + 20,
+    canvas.width - 48,
+    canvas.height - HEADER_HEIGHT - 44,
+    14,
+  );
+  ctx.fillStyle = '#001833';
+  ctx.fill();
 
   for (let index = 0; index < TOTAL_CELLS; index += 1) {
     const row = Math.floor(index / BOARD_SIZE);
     const col = index % BOARD_SIZE;
     const x = PADDING + col * (CELL_SIZE + GAP);
     const y = HEADER_HEIGHT + PADDING + row * (CELL_SIZE + GAP);
+
     const cell = game.board[index];
     const selected = game.selectedIndex === index;
 
     let fill = '#7b8794';
-  let border = '#d8dee9';
-  let text = String(index + 1);
-  let textColor = '#ffffff';
-  let font = 'bold 30px sans-serif';
+    let border = '#d8dee9';
+    let text = '';
+    let textColor = '#ffffff';
+    let font = '28px Anton';
 
     if (reveal) {
-  if (cell.kind === 'prize') {
-    if (cell.label === 'VIP') {
-      fill = selected ? '#16a34a' : '#d4a017';
-      border = selected ? '#dcfce7' : '#fde68a';
-      text = cell.label;
-      textColor = '#ffffff';
-      font = 'bold 26px sans-serif';
-    } else {
-      fill = selected ? '#16a34a' : '#2563eb';
-      border = selected ? '#dcfce7' : '#dbeafe';
-      text = cell.label;
-      textColor = '#ffffff';
-      font = 'bold 28px sans-serif';
-    }
-  } } else {
-  fill = selected ? '#7f1d1d' : '#6b7280';
-  border = selected ? '#fca5a5' : '#d1d5db';
-  text = 'X';
-  textColor = '#ffffff';
-  font = 'bold 42px sans-serif';
+      if (cell.kind === 'prize') {
+        if (cell.label === 'VIP') {
+          fill = selected ? '#16a34a' : '#d4a017';
+          border = selected ? '#dcfce7' : '#fde68a';
+          text = 'VIP';
+          font = '26px Anton';
+        } else {
+          fill = selected ? '#16a34a' : '#2563eb';
+          border = selected ? '#dcfce7' : '#dbeafe';
+          text = cell.label;
+          font = '28px Anton';
+        }
+      } else {
+        fill = selected ? '#991b1b' : '#6b7280';
+        border = selected ? '#fecaca' : '#d1d5db';
+        text = 'X';
+        font = '42px Anton';
+      }
     }
 
     roundRect(ctx, x, y, CELL_SIZE, CELL_SIZE, 14);
@@ -229,7 +245,9 @@ ctx.fillRect(30, HEADER_HEIGHT + 30, 120, 40);
     ctx.strokeStyle = border;
     ctx.stroke();
 
-    drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
+    if (reveal) {
+      drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
+    }
   }
 
   return canvas.encode('png');
@@ -238,7 +256,7 @@ ctx.fillRect(30, HEADER_HEIGHT + 30, 120, 40);
 function buildHiddenEmbed(targetUserId) {
   return new EmbedBuilder()
     .setTitle('Chicks Boosting')
-    .setDescription(`<@${targetUserId}>** Choose 1 Tile. **`)
+    .setDescription(`<@${targetUserId}> **Choose 1 Tile.**`)
     .setColor(0x1d4ed8)
     .setImage('attachment://board.png');
 }
@@ -249,22 +267,22 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
     .setImage('attachment://board.png');
 
   if (cell.kind === 'prize') {
-  embed.setColor(0x16a34a);
+    embed.setColor(0x16a34a);
 
-  if (cell.label === 'VIP') {
-    embed.setDescription(
-      `🎉 **JACKPOT!** <@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and unlocked **VIP**!`,
-    );
-  } else {
-    embed.setDescription(
-      `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and won: **${cell.label}**.`,
-    );
-  }
+    if (cell.label === 'VIP') {
+      embed.setDescription(
+        `🎉 **JACKPOT!** <@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and unlocked **VIP**!`,
+      );
+    } else {
+      embed.setDescription(
+        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and won: **${cell.label}**.`,
+      );
+    }
 
     if (roleAssigned) {
       embed.addFields({
-        name: 'Rol assigned',
-        value: 'The prize role was automatically assigned.',
+        name: 'Rol asignado',
+        value: 'El rol del premio fue asignado automáticamente.',
       });
     } else if (roleAssignmentFailed) {
       embed.addFields({
@@ -330,6 +348,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       }
 
       const activeKey = `${interaction.channelId}:${targetUser.id}`;
+
       if (activeByChannelTarget.has(activeKey)) {
         return interaction.reply({
           content: 'Ese usuario ya tiene una cuadrícula activa en este canal.',
@@ -347,7 +366,9 @@ client.on(Events.InteractionCreate, async (interaction) => {
       activeByChannelTarget.set(activeKey, game.id);
 
       const imageBuffer = await renderBoard(game, { reveal: false });
-      const attachment = new AttachmentBuilder(imageBuffer, { name: 'board.png' });
+      const attachment = new AttachmentBuilder(imageBuffer, {
+        name: 'board.png',
+      });
 
       await interaction.reply({
         embeds: [buildHiddenEmbed(targetUser.id)],
@@ -405,33 +426,43 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       const roleResult =
         cell.kind === 'prize' && interaction.guild
-          ? await assignPrizeRole(interaction.guild, game.targetUserId, cell.roleId)
+          ? await assignPrizeRole(
+              interaction.guild,
+              game.targetUserId,
+              cell.roleId,
+            )
           : { assigned: false, failed: false };
 
       const finalImage = await renderBoard(game, { reveal: true });
-      const finalAttachment = new AttachmentBuilder(finalImage, { name: 'board.png' });
+      const finalAttachment = new AttachmentBuilder(finalImage, {
+        name: 'board.png',
+      });
 
       await interaction.update({
-  embeds: [
-    buildResultEmbed({
-      game,
-      cell,
-      roleAssigned: roleResult.assigned,
-      roleAssignmentFailed: roleResult.failed,
-    }),
-  ],
-  files: [finalAttachment],
-  attachments: [],
-  components: [],
-  allowedMentions: { users: [game.targetUserId] },
-});
+        embeds: [
+          buildResultEmbed({
+            game,
+            cell,
+            roleAssigned: roleResult.assigned,
+            roleAssignmentFailed: roleResult.failed,
+          }),
+        ],
+        files: [finalAttachment],
+        attachments: [],
+        components: [],
+        allowedMentions: { users: [game.targetUserId] },
+      });
 
       cleanupGame(game);
     }
   } catch (error) {
     console.error('Error procesando interacción:', error);
 
-    if (interaction.isRepliable() && !interaction.replied && !interaction.deferred) {
+    if (
+      interaction.isRepliable() &&
+      !interaction.replied &&
+      !interaction.deferred
+    ) {
       await interaction.reply({
         content: 'Ocurrió un error procesando esta interacción.',
         ephemeral: true,
