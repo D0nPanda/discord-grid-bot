@@ -11,7 +11,7 @@ const {
   Events,
   GatewayIntentBits,
 } = require('discord.js');
-const { createCanvas } = require('@napi-rs/canvas');
+const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
 
 const {
@@ -181,8 +181,8 @@ roundRect(
   canvas.height - HEADER_HEIGHT - 27,
   18,
 );
-ctx.fillStyle = 'rgb(255, 0, 0)';
-ctx.font = '30px Arial';
+ctx.fillStyle = 'rgba(243, 39, 3, 0.91)';
+ctx.font = '50px Anton';
 ctx.textAlign = 'left';
 ctx.textBaseline = 'top';
 ctx.fillText('HOLA', 30, HEADER_HEIGHT + 30);
