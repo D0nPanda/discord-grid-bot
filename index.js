@@ -159,22 +159,22 @@ async function renderBoard(game, { reveal = false } = {}) {
   const ctx = canvas.getContext('2d');
 
   // Fondo general
-  ctx.fillStyle = '#07111f';
+  ctx.fillStyle = '#04101d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
 
   // Header
-  ctx.fillStyle = '#0b1b2b';
+  ctx.fillStyle = '#081a2f';
   ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
 
   drawCenteredText(
     ctx,
     'SCRATCH & WIN!',
     0,
-    0,
+    4,
     canvas.width,
-    HEADER_HEIGHT,
-    '50px Anton',
-    '#ffffff',
+    HEADER_HEIGHT - 10,
+    '46px Anton',
+    '#f8fafc',
   );
 
   // Marco exterior
@@ -186,7 +186,7 @@ async function renderBoard(game, { reveal = false } = {}) {
     canvas.height - HEADER_HEIGHT - 24,
     18,
   );
-  ctx.fillStyle = '#2c719a';
+  ctx.fillStyle = '#3a86b7';
   ctx.fill();
 
   // Fondo interior
@@ -198,7 +198,7 @@ async function renderBoard(game, { reveal = false } = {}) {
     canvas.height - HEADER_HEIGHT - 44,
     14,
   );
-  ctx.fillStyle = '#001833';
+  ctx.fillStyle = '#03152b';
   ctx.fill();
 
   for (let index = 0; index < TOTAL_CELLS; index += 1) {
