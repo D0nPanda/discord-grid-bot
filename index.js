@@ -2,6 +2,7 @@ require('dotenv').config();
 
 const crypto = require('node:crypto');
 const path = require('node:path');
+const fs = require('node:fs');
 const {
   ActionRowBuilder,
   AttachmentBuilder,
@@ -15,12 +16,13 @@ const {
 const { createCanvas, GlobalFonts, loadImage  } = require('@napi-rs/canvas');
 
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
+
 const skullIconPromise = loadImage(
-  path.join(__dirname, 'assets', 'icons', 'skull.png')
+  fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'skull.png'))
 );
 
 const partyIconPromise = loadImage(
-  path.join(__dirname, 'assets', 'icons', 'party.png')
+  fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'party.png'))
 );
 
 const {
