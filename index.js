@@ -214,6 +214,21 @@ async function renderBoard(game, { reveal = false } = {}) {
   ctx.fillStyle = '#03152b';
   ctx.fill();
 
+  // Borde Interior
+  ctx.save();
+  roundRect(
+  ctx,
+  24,
+  HEADER_HEIGHT + 20,
+  canvas.width - 48,
+  canvas.height - HEADER_HEIGHT - 44,
+  14,
+);
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = 'rgba(255, 255, 255, 0.08)';
+    ctx.stroke();
+    ctx.restore();
+
   for (let index = 0; index < TOTAL_CELLS; index += 1) {
     const row = Math.floor(index / BOARD_SIZE);
     const col = index % BOARD_SIZE;
@@ -250,13 +265,26 @@ async function renderBoard(game, { reveal = false } = {}) {
       }
     }
 
-    roundRect(ctx, x, y, CELL_SIZE, CELL_SIZE, 14);
-    ctx.fillStyle = fill;
-    ctx.fill();
+    ctx.save();
+ctx.shadowColor = 'rgba(0, 0, 0, 0.28)';
+ctx.shadowBlur = 10;
+ctx.shadowOffsetY = 3;
+
+roundRect(ctx, x, y, CELL_SIZE, CELL_SIZE, 14);
+ctx.fillStyle = fill;
+ctx.fill();
+
+ctx.restore();
 
     ctx.lineWidth = 4;
     ctx.strokeStyle = border;
     ctx.stroke();
+    ctx.save();
+    ctx.beginPath();
+    roundRect(ctx, x + 4, y + 4, CELL_SIZE - 8, 18, 8);
+    ctx.fillStyle = 'rgba(255, 255, 255, 0.10)';
+    ctx.fill();
+    ctx.restore();
 
     if (reveal) {
   if (cell.kind === 'skull') {
@@ -272,13 +300,17 @@ async function renderBoard(game, { reveal = false } = {}) {
     drawCenteredText(ctx, text, x, y + 10 , CELL_SIZE, 40, font, textColor);
 
     const iconSize = 40;
+    ctx.save();
+    ctx.shadowColor = '#facc15';
+    ctx.shadowBlur = 16;
     ctx.drawImage(
       vipIcon,
       x + (CELL_SIZE - iconSize) / 2,
       y + 58,
       iconSize,
-      iconSize
+      iconSize   
     );
+  ctx.restore();
   }else {
     drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
     }
