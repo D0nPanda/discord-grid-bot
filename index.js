@@ -244,6 +244,18 @@ async function renderBoard(game, { reveal = false } = {}) {
     let textColor = '#ffffff';
     let font = '28px Anton';
 
+    if (!reveal) {
+  drawCenteredText(
+    ctx,
+    String(index + 1),
+    x,
+    y,
+    CELL_SIZE,
+    CELL_SIZE,
+    '30px Anton',
+    '#f8fafc'
+  );
+}
     if (reveal) {
       if (cell.kind === 'prize') {
         if (cell.label === 'VIP') {
