@@ -268,7 +268,7 @@ async function renderBoard(game, { reveal = false } = {}) {
       iconSize
     );
   } else if (cell.kind === 'prize' && cell.label === 'VIP') {
-    drawCenteredText(ctx, text, x, y - 2, CELL_SIZE, 40, font, textColor);
+    drawCenteredText(ctx, text, x, y + 5 , CELL_SIZE, 40, font, textColor);
 
     const iconSize = 40;
     ctx.drawImage(
