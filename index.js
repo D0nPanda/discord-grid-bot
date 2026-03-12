@@ -165,16 +165,11 @@ ctx.fillRect(0, 0, canvas.width, canvas.height);
 ctx.fillStyle = '#0b1b2b';
 ctx.fillRect(0, 0, canvas.width, HEADER_HEIGHT);
 
-  drawCenteredText(
-  ctx,
-  'SCRATCH & WIN!',
-  0,
-  5,
-  canvas.width,
-  64,
-  'bold 50px sans-serif',
-  '#ffffff',
-);
+ctx.fillStyle = '#ffffff';
+ctx.font = 'bold 50px sans-serif';
+ctx.textAlign = 'center';
+ctx.textBaseline = 'middle';
+ctx.fillText('TEST', canvas.width / 2, 32);
 
  ctx.fillStyle = '#2c719a';
 roundRect(
