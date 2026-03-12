@@ -15,6 +15,7 @@ const { createCanvas, GlobalFonts, loadImage  } = require('@napi-rs/canvas');
 
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
 const skullIconPromise = loadImage('./assets/icons/skull.png');
+const PartyIconPromise = loadImage('./assets/icons/Party.png');
 
 const {
   DISCORD_TOKEN,
@@ -159,6 +160,7 @@ async function renderBoard(game, { reveal = false } = {}) {
   const canvas = createCanvas(boardPixels, boardPixels + HEADER_HEIGHT);
   const ctx = canvas.getContext('2d');
   const skullIcon = await skullIconPromise;
+  const PartyIcon = await PartyIconPromise;
   // Fondo general
   ctx.fillStyle = '#04101d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -256,7 +258,18 @@ async function renderBoard(game, { reveal = false } = {}) {
       iconSize,
       iconSize
     );
-  } else {
+  } else if (cell.kind === 'prize' && cell.label === 'VIP') {
+    drawCenteredText(ctx, text, x, y - 12, CELL_SIZE, 40, font, textColor);
+
+    const iconSize = 34;
+    ctx.drawImage(
+      partyIcon,
+      x + (CELL_SIZE - iconSize) / 2,
+      y + 50,
+      iconSize,
+      iconSize
+    );
+  }else {
     drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
     }
  }
