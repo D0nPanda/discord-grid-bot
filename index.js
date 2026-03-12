@@ -252,7 +252,7 @@ async function renderBoard(game, { reveal = false } = {}) {
     ctx.drawImage(
       skullIcon,
       x + (CELL_SIZE - iconSize) / 2,
-      y + (CELL_SIZE - iconSize) / 2,
+      y + (CELL_SIZE - iconSize) / 2 - 2,
       iconSize,
       iconSize
     );
@@ -306,7 +306,7 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
     embed
       .setColor(0x6b7280)
       .setDescription(
-        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and hit a skull 💀.`,
+        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and hit a skull <:Skull_status_icon:>.`,
       );
   }
 
