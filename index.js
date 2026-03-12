@@ -21,9 +21,6 @@ const skullIconPromise = loadImage(
   fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'skull.png'))
 );
 
-const partyIconPromise = loadImage(
-  fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'party.png'))
-);
 
 const vipIconPromise = loadImage(
   fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'vip.png'))
@@ -172,7 +169,6 @@ async function renderBoard(game, { reveal = false } = {}) {
   const canvas = createCanvas(boardPixels, boardPixels + HEADER_HEIGHT);
   const ctx = canvas.getContext('2d');
   const skullIcon = await skullIconPromise;
-  const partyIcon = await partyIconPromise;
   const vipIcon = await vipIconPromise;
 
   // Fondo general
@@ -333,7 +329,7 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
     embed
       .setColor(0x6b7280)
       .setDescription(
-        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and hit a skull <:Skull_status_icon:>.`,
+        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and hit a skull <:Skull_status_icon:1481723131528740929>.`,
       );
   }
 
