@@ -1,0 +1,15 @@
+{
+  "name": "discount-grid-bot",
+  "version": "1.0.0",
+  "description": "Bot de Discord con cuadrícula 4x4 de descuentos y calaveras",
+  "main": "index.js",
+  "scripts": {
+    "deploy": "node deploy-commands.js",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.91",
+    "discord.js": "^14.25.1",
+    "dotenv": "^16.6.1"
+  }
+}
