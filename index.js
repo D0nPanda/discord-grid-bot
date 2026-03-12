@@ -11,9 +11,10 @@ const {
   Events,
   GatewayIntentBits,
 } = require('discord.js');
-const { createCanvas, GlobalFonts } = require('@napi-rs/canvas');
+const { createCanvas, GlobalFonts, loadImage  } = require('@napi-rs/canvas');
 
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
+const skullIconPromise = loadImage('./assets/icons/skull.png');
 
 const {
   DISCORD_TOKEN,
@@ -157,7 +158,7 @@ async function renderBoard(game, { reveal = false } = {}) {
 
   const canvas = createCanvas(boardPixels, boardPixels + HEADER_HEIGHT);
   const ctx = canvas.getContext('2d');
-
+  const skullIcon = await skullIconPromise;
   // Fondo general
   ctx.fillStyle = '#04101d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -232,8 +233,8 @@ async function renderBoard(game, { reveal = false } = {}) {
       } else {
         fill = selected ? '#991b1b' : '#4b5563';
         border = selected ? '#fecaca' : '#f3f4f6';
-        text = 'X';
-        font = '42px Anton';
+        text = '';
+        font = '36px Anton';
       }
     }
 
@@ -246,9 +247,20 @@ async function renderBoard(game, { reveal = false } = {}) {
     ctx.stroke();
 
     if (reveal) {
-      drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
+  if (cell.kind === 'skull') {
+    const iconSize = 42;
+    ctx.drawImage(
+      skullIcon,
+      x + (CELL_SIZE - iconSize) / 2,
+      y + (CELL_SIZE - iconSize) / 2,
+      iconSize,
+      iconSize
+    );
+  } else {
+    drawCenteredText(ctx, text, x, y, CELL_SIZE, CELL_SIZE, font, textColor);
     }
-  }
+ }
+}
 
   return canvas.encode('png');
 }
