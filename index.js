@@ -180,6 +180,12 @@ roundRect(
   canvas.height - HEADER_HEIGHT - 27,
   18,
 );
+ctx.fillStyle = '#ffffff';
+ctx.font = '30px Arial';
+ctx.textAlign = 'left';
+ctx.textBaseline = 'top';
+ctx.fillText('HOLA', 30, HEADER_HEIGHT + 30);
+
 ctx.fill();
 
   for (let index = 0; index < TOTAL_CELLS; index += 1) {
