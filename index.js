@@ -216,14 +216,13 @@ ctx.fill();
       textColor = '#ffffff';
       font = 'bold 28px sans-serif';
     }
-  } else {
-    fill = selected ? '#7f1d1d' : '#6b7280';
-    border = selected ? '#fca5a5' : '#d1d5db';
-    text = '☠️';
-    textColor = '#ffffff';
-    font = 'bold 46px "Segoe UI Emoji", "Apple Color Emoji", sans-serif';
-  }
-}
+  } } else {
+  fill = selected ? '#7f1d1d' : '#6b7280';
+  border = selected ? '#fca5a5' : '#d1d5db';
+  text = 'X';
+  textColor = '#ffffff';
+  font = 'bold 42px sans-serif';
+    }
 
     roundRect(ctx, x, y, CELL_SIZE, CELL_SIZE, 14);
     ctx.fillStyle = fill;
