@@ -210,8 +210,8 @@ async function renderBoard(game, { reveal = false } = {}) {
     const cell = game.board[index];
     const selected = game.selectedIndex === index;
 
-    let fill = '#7b8794';
-    let border = '#d8dee9';
+    let fill = '#818b98';
+    let border = '#f3f4f6';
     let text = '';
     let textColor = '#ffffff';
     let font = '28px Anton';
@@ -230,8 +230,8 @@ async function renderBoard(game, { reveal = false } = {}) {
           font = '28px Anton';
         }
       } else {
-        fill = selected ? '#991b1b' : '#6b7280';
-        border = selected ? '#fecaca' : '#d1d5db';
+        fill = selected ? '#991b1b' : '#4b5563';
+        border = selected ? '#fecaca' : '#f3f4f6';
         text = 'X';
         font = '42px Anton';
       }
@@ -294,7 +294,7 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
     embed
       .setColor(0x6b7280)
       .setDescription(
-        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and didn't win.`,
+        `<@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and hit a skull 💀.`,
       );
   }
 
