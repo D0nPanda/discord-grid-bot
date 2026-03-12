@@ -219,10 +219,10 @@ async function renderBoard(game, { reveal = false } = {}) {
     if (reveal) {
       if (cell.kind === 'prize') {
         if (cell.label === 'VIP') {
-          fill = selected ? '#16a34a' : '#d4a017';
-          border = selected ? '#dcfce7' : '#fde68a';
+          fill = selected ? '#16a34a' : '#e0aa19';
+          border = selected ? '#dcfce7' : '#fff3b0';
           text = 'VIP';
-          font = '26px Anton';
+          font = '30px Anton';
         } else {
           fill = selected ? '#16a34a' : '#2563eb';
           border = selected ? '#dcfce7' : '#dbeafe';
