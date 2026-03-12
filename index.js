@@ -1,6 +1,7 @@
 require('dotenv').config();
 
 const crypto = require('node:crypto');
+const path = require('node:path');
 const {
   ActionRowBuilder,
   AttachmentBuilder,
@@ -14,8 +15,13 @@ const {
 const { createCanvas, GlobalFonts, loadImage  } = require('@napi-rs/canvas');
 
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
-const skullIconPromise = loadImage('./assets/icons/skull.png');
-const partyIconPromise = loadImage('./assets/icons/party.png');
+const skullIconPromise = loadImage(
+  path.join(__dirname, 'assets', 'icons', 'skull.png')
+);
+
+const partyIconPromise = loadImage(
+  path.join(__dirname, 'assets', 'icons', 'party.png')
+);
 
 const {
   DISCORD_TOKEN,
@@ -161,7 +167,7 @@ async function renderBoard(game, { reveal = false } = {}) {
   const ctx = canvas.getContext('2d');
   const skullIcon = await skullIconPromise;
   const partyIcon = await partyIconPromise;
-  
+
   // Fondo general
   ctx.fillStyle = '#04101d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -262,7 +268,7 @@ async function renderBoard(game, { reveal = false } = {}) {
   } else if (cell.kind === 'prize' && cell.label === 'VIP') {
     drawCenteredText(ctx, text, x, y - 12, CELL_SIZE, 40, font, textColor);
 
-    const iconSize = 34;
+    const iconSize = 44;
     ctx.drawImage(
       partyIcon,
       x + (CELL_SIZE - iconSize) / 2,
