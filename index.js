@@ -181,7 +181,7 @@ roundRect(
   canvas.height - HEADER_HEIGHT - 27,
   18,
 );
-ctx.fillStyle = 'rgba(243, 39, 3, 0.91)';
+ctx.fillStyle = 'rgb(243, 39, 3, 0.91)';
 ctx.font = '50px Anton';
 ctx.textAlign = 'left';
 ctx.textBaseline = 'top';
