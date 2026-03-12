@@ -248,7 +248,7 @@ async function renderBoard(game, { reveal = false } = {}) {
 
     if (reveal) {
   if (cell.kind === 'skull') {
-    const iconSize = 42;
+    const iconSize = 58;
     ctx.drawImage(
       skullIcon,
       x + (CELL_SIZE - iconSize) / 2,
