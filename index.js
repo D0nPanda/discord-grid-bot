@@ -15,7 +15,7 @@ const { createCanvas, GlobalFonts, loadImage  } = require('@napi-rs/canvas');
 
 GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
 const skullIconPromise = loadImage('./assets/icons/skull.png');
-const PartyIconPromise = loadImage('./assets/icons/Party.png');
+const partyIconPromise = loadImage('./assets/icons/party.png');
 
 const {
   DISCORD_TOKEN,
@@ -160,7 +160,8 @@ async function renderBoard(game, { reveal = false } = {}) {
   const canvas = createCanvas(boardPixels, boardPixels + HEADER_HEIGHT);
   const ctx = canvas.getContext('2d');
   const skullIcon = await skullIconPromise;
-  const PartyIcon = await PartyIconPromise;
+  const partyIcon = await partyIconPromise;
+  
   // Fondo general
   ctx.fillStyle = '#04101d';
   ctx.fillRect(0, 0, canvas.width, canvas.height);
