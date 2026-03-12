@@ -224,8 +224,8 @@ async function renderBoard(game, { reveal = false } = {}) {
           text = 'VIP';
           font = '30px Anton';
         } else {
-          fill = selected ? '#16a34a' : '#2563eb';
-          border = selected ? '#dcfce7' : '#dbeafe';
+          fill = selected ? '#16a34a' : '#2f6df6';
+          border = selected ? '#dcfce7' : '#e5efff';
           text = cell.label;
           font = '28px Anton';
         }
