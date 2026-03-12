@@ -32,7 +32,7 @@ const TOTAL_CELLS = BOARD_SIZE * BOARD_SIZE;
 const CELL_SIZE = 110;
 const GAP = 12;
 const PADDING = 24;
-const HEADER_HEIGHT = 95;
+const HEADER_HEIGHT = 110;
 
 const PRIZES = [
   { label: '5%', roleId: ROLE_5 || null },
