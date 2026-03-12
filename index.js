@@ -25,6 +25,10 @@ const partyIconPromise = loadImage(
   fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'party.png'))
 );
 
+const vipIconPromise = loadImage(
+  fs.readFileSync(path.join(__dirname, 'assets', 'icons', 'vip.png'))
+);
+
 const {
   DISCORD_TOKEN,
   ROLE_5,
@@ -169,6 +173,7 @@ async function renderBoard(game, { reveal = false } = {}) {
   const ctx = canvas.getContext('2d');
   const skullIcon = await skullIconPromise;
   const partyIcon = await partyIconPromise;
+  const vipIcon = await vipIconPromise;
 
   // Fondo general
   ctx.fillStyle = '#04101d';
@@ -272,7 +277,7 @@ async function renderBoard(game, { reveal = false } = {}) {
 
     const iconSize = 40;
     ctx.drawImage(
-      partyIcon,
+      vipIcon,
       x + (CELL_SIZE - iconSize) / 2,
       y + 58,
       iconSize,
