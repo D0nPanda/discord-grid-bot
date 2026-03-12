@@ -144,7 +144,11 @@ function drawCenteredText(ctx, text, x, y, width, height, font, color) {
   ctx.fillStyle = color;
   ctx.textAlign = 'center';
   ctx.textBaseline = 'middle';
+  ctx.shadowColor = 'rgba(0,0,0,0.4)';
+  ctx.shadowBlur = 4;
+  ctx.shadowOffsetY = 2;
   ctx.fillText(text, x + width / 2, y + height / 2);
+  ctx.shadowBlur = 0;
   ctx.restore();
 }
 
@@ -238,7 +242,7 @@ async function renderBoard(game, { reveal = false } = {}) {
     const cell = game.board[index];
     const selected = game.selectedIndex === index;
 
-    let fill = '#818b98';
+    let fill = '#4b5563';
     let border = '#f3f4f6';
     let text = '';
     let textColor = '#ffffff';
@@ -286,6 +290,7 @@ ctx.restore();
     ctx.fillStyle = 'rgba(255, 255, 255, 0.10)';
     ctx.fill();
     ctx.restore();
+    
 if (!reveal) {
   drawCenteredText(
     ctx,
@@ -294,7 +299,7 @@ if (!reveal) {
     y,
     CELL_SIZE,
     CELL_SIZE,
-    '30px Anton',
+    '34px Anton',
     '#f8fafc'
   );
 }
