@@ -12,6 +12,7 @@ const {
   GatewayIntentBits,
 } = require('discord.js');
 const { createCanvas } = require('@napi-rs/canvas');
+GlobalFonts.registerFromPath('./assets/fonts/Anton-Regular.ttf', 'Anton');
 
 const {
   DISCORD_TOKEN,
