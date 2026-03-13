@@ -252,8 +252,8 @@ async function renderBoard(game, { reveal = false } = {}) {
     if (reveal) {
       if (cell.kind === 'prize') {
         if (cell.label === 'VIP') {
-          fill = selected ? '#d1c73c' : '#111827';
-          border = selected ? '#facc15' : '#eab308';
+          fill = selected ? '#eab308' : '#111827';
+          border = selected ? '#111827' : '#eab308';
           text = 'VIP';
           font = '30px Anton';
         } else {
@@ -477,7 +477,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       if (!game) {
         return interaction.reply({
-          content: 'Esta cuadrícula ya expiró o dejó de existir.',
+          content: 'This grid has already expired or no longer exists, open a new one.',
           ephemeral: true,
         });
       }
