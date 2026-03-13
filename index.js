@@ -252,7 +252,7 @@ async function renderBoard(game, { reveal = false } = {}) {
     if (reveal) {
       if (cell.kind === 'prize') {
         if (cell.label === 'VIP') {
-          fill = selected ? '#1f2937' : '#111827';
+          fill = selected ? '#d1c73c' : '#111827';
           border = selected ? '#facc15' : '#eab308';
           text = 'VIP';
           font = '30px Anton';
@@ -355,7 +355,7 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
 
     if (cell.label === 'VIP') {
       embed.setDescription(
-        `🎉 **JACKPOT!** <@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and unlocked **VIP**!`,
+        `**JACKPOT!** <@${game.targetUserId}> opened tile **#${game.selectedIndex + 1}** and unlocked **VIP <:vip:1481946248117223424>**!`,
       );
     } else {
       embed.setDescription(
@@ -365,13 +365,13 @@ function buildResultEmbed({ game, cell, roleAssigned, roleAssignmentFailed }) {
 
     if (roleAssigned) {
       embed.addFields({
-        name: 'Rol asignado',
-        value: 'El rol del premio fue asignado automáticamente.',
+        name: 'Rol assigned',
+        value: 'The rol was assigned automatically.',
       });
     } else if (roleAssignmentFailed) {
       embed.addFields({
-        name: 'Rol no asignado',
-        value: 'No pude asignar el rol. Revisa permisos y jerarquía de roles.',
+        name: 'Rol was not assigned',
+        value: 'I could not assign the role, check the permissions.',
       });
     }
   } else {
@@ -417,7 +417,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
     ) {
       if (!interaction.inGuild()) {
         return interaction.reply({
-          content: 'Este comando solo funciona dentro de un servidor.',
+          content: 'This command only works within a server.',
           ephemeral: true,
         });
       }
@@ -426,7 +426,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       if (targetUser.bot) {
         return interaction.reply({
-          content: 'No tiene sentido crear una cuadrícula para otro bot.',
+          content: 'There is no point in creating a grid for another bot.',
           ephemeral: true,
         });
       }
@@ -435,7 +435,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       if (activeByChannelTarget.has(activeKey)) {
         return interaction.reply({
-          content: 'Ese usuario ya tiene una cuadrícula activa en este canal.',
+          content: 'That user already has an active grid in this channel.',
           ephemeral: true,
         });
       }
