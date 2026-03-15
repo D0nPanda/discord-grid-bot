@@ -1,10 +1,10 @@
 const GRID_LAYOUT = {
-  startX: 4,
-  startY: 271,
-  cellWidth: 102,
-  cellHeight: 76,
-  gapX: 1,
-  gapY: 1,
+  startX: 5,
+  startY: 261,
+  cellWidth: 101,
+  cellHeight: 58,
+  gapX: 2,
+  gapY: 2,
 };
 
 function withRect(cell) {

@@ -54,31 +54,27 @@ async function renderGridImage(bingoResult) {
 
 function drawCompletedOverlay(ctx, rect) {
   const { x, y, width, height } = rect;
-  const radius = 8;
+  const radius = 6;
 
   ctx.save();
 
+  // fondo verde translúcido
+  ctx.beginPath();
   roundedRect(ctx, x, y, width, height, radius);
-  ctx.fillStyle = 'rgba(46, 204, 113, 0.34)';
+  ctx.fillStyle = 'rgba(46, 204, 113, 0.30)';
   ctx.fill();
 
+  // borde verde limpio
+  ctx.beginPath();
   roundedRect(ctx, x + 1, y + 1, width - 2, height - 2, radius);
-  ctx.lineWidth = 3;
-  ctx.strokeStyle = 'rgba(46, 204, 113, 0.95)';
-  ctx.stroke();
-
-  ctx.shadowColor = 'rgba(46, 204, 113, 0.55)';
-  ctx.shadowBlur = 12;
-  roundedRect(ctx, x + 2, y + 2, width - 4, height - 4, radius);
   ctx.lineWidth = 2;
-  ctx.strokeStyle = 'rgba(46, 204, 113, 0.70)';
+  ctx.strokeStyle = 'rgba(46, 204, 113, 0.90)';
   ctx.stroke();
 
   ctx.restore();
 }
 
 function roundedRect(ctx, x, y, width, height, radius) {
-  ctx.beginPath();
   ctx.moveTo(x + radius, y);
   ctx.lineTo(x + width - radius, y);
   ctx.quadraticCurveTo(x + width, y, x + width, y + radius);
@@ -88,13 +84,12 @@ function roundedRect(ctx, x, y, width, height, radius) {
   ctx.quadraticCurveTo(x, y + height, x, y + height - radius);
   ctx.lineTo(x, y + radius);
   ctx.quadraticCurveTo(x, y, x + radius, y);
-  ctx.closePath();
 }
 
 async function handleTrackgridCommand(interaction) {
   const targetUser = interaction.options.getUser('user', true);
 
-  await interaction.deferReply({ ephemeral: true });
+  await interaction.deferReply();
 
   const bingoResult = await getBingoProgressForCustomer(targetUser.id);
   const imageBuffer = await renderGridImage(bingoResult);
@@ -111,6 +106,7 @@ async function handleTrackgridCommand(interaction) {
   await interaction.editReply({
     embeds: [embed],
     files: [attachment],
+    allowedMentions: { users: [targetUser.id] },
   });
 }
 
