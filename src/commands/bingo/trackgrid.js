@@ -1,5 +1,5 @@
 const { getBingoProgressForCustomer } = require('../../modules/bingo/application/getBingoProgressForCustomer');
-const { buildTrackgridEmbed } = require('../../modules/bingo/presentation/embed');
+const { buildTrackgridEmbed } = require('../../modules/bingo/presentation/gridEmbed');
 
 async function handleTrackgridCommand(interaction) {
   const targetUser = interaction.options.getUser('user', true);
