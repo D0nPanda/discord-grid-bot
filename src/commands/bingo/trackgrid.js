@@ -48,7 +48,7 @@ async function renderGridImage(bingoResult) {
   for (const cell of completedCells) {
     drawCompletedOverlay(ctx, cell.rect);
   }
-
+  drawCompletedLines(ctx, bingoResult);
   return canvas.toBuffer('image/png');
 }
 
@@ -69,6 +69,74 @@ function drawCompletedOverlay(ctx, rect) {
   roundedRect(ctx, x + 1, y + 1, width - 2, height - 2, radius);
   ctx.lineWidth = 2;
   ctx.strokeStyle = 'rgba(46, 204, 113, 0.90)';
+  ctx.stroke();
+
+  ctx.restore();
+}
+function drawCompletedLines(ctx, bingoResult) {
+  const cells = Object.values(bingoResult.cells).filter((cell) => cell.rect);
+
+  const completedRows = bingoResult.summary.completedRows || [];
+  const completedCols = bingoResult.summary.completedCols || [];
+
+  for (const row of completedRows) {
+    const rowCells = cells
+      .filter((cell) => cell.row === row)
+      .sort((a, b) => a.col - b.col);
+
+    if (rowCells.length === 0) continue;
+
+    const first = rowCells[0].rect;
+    const last = rowCells[rowCells.length - 1].rect;
+
+    drawLineHighlight(
+      ctx,
+      first.x - 2,
+      first.y - 2,
+      (last.x + last.width) - first.x + 4,
+      first.height + 4
+    );
+  }
+
+  for (const col of completedCols) {
+    const colCells = cells
+      .filter((cell) => cell.col === col)
+      .sort((a, b) => a.row - b.row);
+
+    if (colCells.length === 0) continue;
+
+    const first = colCells[0].rect;
+    const last = colCells[colCells.length - 1].rect;
+
+    drawLineHighlight(
+      ctx,
+      first.x - 2,
+      first.y - 2,
+      first.width + 4,
+      (last.y + last.height) - first.y + 4
+    );
+  }
+}
+
+function drawLineHighlight(ctx, x, y, width, height) {
+  const radius = 10;
+
+  ctx.save();
+
+  ctx.shadowColor = 'rgba(255, 215, 0, 0.55)';
+  ctx.shadowBlur = 14;
+
+  ctx.beginPath();
+  roundedRect(ctx, x, y, width, height, radius);
+  ctx.lineWidth = 4;
+  ctx.strokeStyle = 'rgba(255, 215, 0, 0.90)';
+  ctx.stroke();
+
+  ctx.shadowBlur = 0;
+  ctx.beginPath();
+  roundedRect(ctx, x + 2, y + 2, width - 4, height - 4, radius);
+  ctx.lineWidth = 2;
+  ctx.strokeStyle = 'rgba(255, 240, 170, 0.85)';
   ctx.stroke();
 
   ctx.restore();
