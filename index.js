@@ -28,6 +28,10 @@ const vipIconPromise = loadImage(
 
 const {
   DISCORD_TOKEN,
+  TEST_GUILD_ID,
+  TEST_STAFF_ROLE_ID,
+  MAIN_GUILD_ID,
+  MAIN_STAFF_ROLE_ID,
   ROLE_5,
   ROLE_10,
   ROLE_15,
@@ -46,12 +50,12 @@ const PADDING = 24;
 const HEADER_HEIGHT = 110;
 
 const PRIZES = [
-  { label: '5%', roleId: ROLE_5 || null },
-  { label: '10%', roleId: ROLE_10 || null },
-  { label: '15%', roleId: ROLE_15 || null },
+  { label: '5%', roleId:  null },
+  { label: '10%', roleId: null },
+  { label: '15%', roleId: null },
   { label: 'VIP', roleId: null },
-  // Si luego quieres usar 20%, agrégalo aquí:
-  // { label: '20%', roleId: ROLE_20 || null },
+  // Si luego quieres usar VIP, agrégalo aquí:
+  // { label: 'VIP', roleId: ROLE_VIP || null },
 ];
 
 const games = new Map();
@@ -404,6 +408,11 @@ function cleanupGame(game) {
   games.delete(game.id);
   activeByChannelTarget.delete(`${game.channelId}:${game.targetUserId}`);
 }
+function getStaffRoleIdForGuild(guildId) {
+  if (guildId === TEST_GUILD_ID) return TEST_STAFF_ROLE_ID;
+  if (guildId === MAIN_GUILD_ID) return MAIN_STAFF_ROLE_ID;
+  return null;
+}
 
 client.once(Events.ClientReady, (readyClient) => {
   console.log(`Bot listo como ${readyClient.user.tag}`);
@@ -421,7 +430,23 @@ client.on(Events.InteractionCreate, async (interaction) => {
           ephemeral: true,
         });
       }
+      
+      const staffRoleId = getStaffRoleIdForGuild(interaction.guild.id);
 
+      if (!staffRoleId) {
+        return interaction.reply({
+          content: 'This server is not configured to use this command.',
+          ephemeral: true,
+        });
+      }
+
+      if (!interaction.member.roles.cache.has(staffRoleId)) {
+        return interaction.reply({
+          content: 'You do not have permission to use this command.',
+          ephemeral: true,
+        });
+      }
+      
       const targetUser = interaction.options.getUser('cliente', true);
 
       if (targetUser.bot) {
