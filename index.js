@@ -432,7 +432,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
       }
       
       const staffRoleId = getStaffRoleIdForGuild(interaction.guild.id);
-
+      console.log('Guild actual:', interaction.guild.id);
+      console.log('TEST_GUILD_ID:', TEST_GUILD_ID);
+      console.log('MAIN_GUILD_ID:', MAIN_GUILD_ID);
+      console.log('Staff role detectado:', staffRoleId);
+      
       if (!staffRoleId) {
         return interaction.reply({
           content: 'This server is not configured to use this command.',
@@ -446,7 +450,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
           ephemeral: true,
         });
       }
-      
+
       const targetUser = interaction.options.getUser('cliente', true);
 
       if (targetUser.bot) {
