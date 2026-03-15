@@ -500,6 +500,45 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
       return;
     }
+        if (
+      interaction.isChatInputCommand() &&
+      interaction.commandName === 'trackgrid'
+    ) {
+      if (!interaction.inGuild()) {
+        return interaction.reply({
+          content: 'This command only works within a server.',
+          ephemeral: true,
+        });
+      }
+
+      const staffRoleId = getStaffRoleIdForGuild(interaction.guild.id);
+
+      if (!staffRoleId) {
+        return interaction.reply({
+          content: 'This server is not configured to use this command.',
+          ephemeral: true,
+        });
+      }
+
+      if (!interaction.member.roles.cache.has(staffRoleId)) {
+        return interaction.reply({
+          content: 'You do not have permission to use this command.',
+          ephemeral: true,
+        });
+      }
+
+      const targetUser = interaction.options.getUser('user', true);
+
+      if (targetUser.bot) {
+        return interaction.reply({
+          content: 'There is no point in checking grid progress for another bot.',
+          ephemeral: true,
+        });
+      }
+
+      await handleTrackgridCommand(interaction);
+      return;
+    }
 
     if (interaction.isButton() && interaction.customId.startsWith('promo:')) {
       const [, gameId, rawIndex] = interaction.customId.split(':');
