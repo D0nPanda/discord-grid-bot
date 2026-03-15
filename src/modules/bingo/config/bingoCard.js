@@ -1,8 +1,8 @@
 const GRID_LAYOUT = {
-  startX: 6,
+  startX: 2,
   startY: 277,
-  cellWidth: 101,
-  cellHeight: 58,
+  cellWidth: 106,
+  cellHeight: 62,
   gapX: 2,
   gapY: 2,
 };
