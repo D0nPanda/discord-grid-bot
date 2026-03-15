@@ -3,6 +3,7 @@ require('dotenv').config();
 const crypto = require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs');
+const { handleTrackgridCommand } = require('./src/commands/bingo/trackgrid');
 const {
   ActionRowBuilder,
   AttachmentBuilder,
