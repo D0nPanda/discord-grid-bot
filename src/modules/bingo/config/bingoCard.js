@@ -1,8 +1,26 @@
-const BINGO_CARD = {
-  rows: 5,
-  cols: 5,
-  cells: [
-    { id: 'r1c1', row: 1, col: 1, label: 'Skilling', type: 'category_total', category: 'Powerleveling', minTotal: 45, priority: 2 },
+const GRID_LAYOUT = {
+  startX: 4,
+  startY: 271,
+  cellWidth: 102,
+  cellHeight: 76,
+  gapX: 1,
+  gapY: 1,
+};
+
+function withRect(cell) {
+  return {
+    ...cell,
+    rect: {
+      x: GRID_LAYOUT.startX + (cell.col - 1) * (GRID_LAYOUT.cellWidth + GRID_LAYOUT.gapX),
+      y: GRID_LAYOUT.startY + (cell.row - 1) * (GRID_LAYOUT.cellHeight + GRID_LAYOUT.gapY),
+      width: GRID_LAYOUT.cellWidth,
+      height: GRID_LAYOUT.cellHeight,
+    },
+  };
+}
+const rawCells = [
+  // aquí dejas exactamente todas tus 25 celdas como ya las tienes
+  { id: 'r1c1', row: 1, col: 1, label: 'Skilling', type: 'category_total', category: 'Powerleveling', minTotal: 45, priority: 2 },
     { id: 'r1c2', row: 1, col: 2, label: '90kc PvM Mid', type: 'category_quantity', category: 'PvM Mid', minQuantity: 90, priority: 2 },
     { id: 'r1c3', row: 1, col: 3, label: '3 Quests', type: 'category_quantity', category: 'Questing', minQuantity: 3, priority: 3 },
     { id: 'r1c4', row: 1, col: 4, label: '2 Minigames', type: 'category_quantity', category: 'Minigame', minQuantity: 2, priority: 3 },
@@ -31,7 +49,12 @@ const BINGO_CARD = {
     { id: 'r5c3', row: 5, col: 3, label: '40kc PvM High', type: 'category_quantity', category: 'PvM High', minQuantity: 40, priority: 1 },
     { id: 'r5c4', row: 5, col: 4, label: '250kc PvM Low', type: 'category_quantity', category: 'PvM Low', minQuantity: 250, priority: 1 },
     { id: 'r5c5', row: 5, col: 5, label: '4 Minigames', type: 'category_quantity', category: 'Minigame', minQuantity: 4, priority: 1 },
-  ],
+];
+const BINGO_CARD = {
+    
+  rows: 5,
+  cols: 5,
+  cells: rawCells.map(withRect), 
 };
 
 module.exports = { BINGO_CARD };

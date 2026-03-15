@@ -1,5 +1,6 @@
-const { EmbedBuilder } = require('discord.js');
+const { EmbedBuilder, AttachmentBuilder } = require('discord.js');
 const { getBingoProgressForCustomer } = require('../../modules/bingo/application/getBingoProgressForCustomer');
+const { renderGridImage } = require('../../modules/bingo/presentation/renderGridImage');
 
 function buildTrackgridEmbed({ targetUser, bingoResult }) {
   const completedRewards = bingoResult.rewardsUnlocked.length
@@ -8,9 +9,7 @@ function buildTrackgridEmbed({ targetUser, bingoResult }) {
 
   return new EmbedBuilder()
     .setTitle('ChicksGold Grid Progress')
-    .setDescription(
-      `${targetUser}\nYour current progress in the Grid.`
-    )
+    .setDescription(`${targetUser}\nYour current progress in the Grid.`)
     .addFields(
       {
         name: 'Unlocked Rewards',
@@ -27,7 +26,8 @@ function buildTrackgridEmbed({ targetUser, bingoResult }) {
         value: `${bingoResult.summary.progressPercent}%`,
         inline: true,
       }
-    );
+    )
+    .setImage('attachment://grid-progress.png');
 }
 
 async function handleTrackgridCommand(interaction) {
@@ -36,6 +36,12 @@ async function handleTrackgridCommand(interaction) {
   await interaction.deferReply({ ephemeral: true });
 
   const bingoResult = await getBingoProgressForCustomer(targetUser.id);
+  const imageBuffer = await renderGridImage(bingoResult);
+
+  const attachment = new AttachmentBuilder(imageBuffer, {
+    name: 'grid-progress.png',
+  });
+
   const embed = buildTrackgridEmbed({
     targetUser: `<@${targetUser.id}>`,
     bingoResult,
@@ -43,6 +49,7 @@ async function handleTrackgridCommand(interaction) {
 
   await interaction.editReply({
     embeds: [embed],
+    files: [attachment],
   });
 }
 
