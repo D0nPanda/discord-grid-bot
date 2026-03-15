@@ -18,7 +18,7 @@ async function renderGridImage(bingoResult) {
   for (const cell of completedCells) {
     drawCompletedOverlay(ctx, cell.rect);
   }
-
+  drawCompletedLines(ctx, bingoResult);
   return canvas.toBuffer('image/png');
 }
 
