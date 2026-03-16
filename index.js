@@ -52,8 +52,10 @@ const HEADER_HEIGHT = 110;
 
 const PRIZES = [
   { label: '10kc', roleId:  null },
-  { label: '20kc', roleId: null },
+  { label: '10kc', roleId: null },
+  { label: '25kc', roleId: null },
   { label: '35kc', roleId: null },
+  { label: 'Try again', roleId: null },
   { label: 'VIP', roleId: null },
   // Si luego quieres usar VIP, agrégalo aquí:
   // { label: 'VIP', roleId: ROLE_VIP || null },
@@ -190,7 +192,7 @@ async function renderBoard(game, { reveal = false } = {}) {
 
   drawCenteredText(
     ctx,
-    'EXTRA KC!',
+    'BONUS KC REWARD!',
     0,
     4,
     canvas.width,
