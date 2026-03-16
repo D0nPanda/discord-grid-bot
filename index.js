@@ -190,7 +190,7 @@ async function renderBoard(game, { reveal = false } = {}) {
 
   drawCenteredText(
     ctx,
-    'SCRATCH & WIN!',
+    'EXTRA KC!',
     0,
     4,
     canvas.width,
