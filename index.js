@@ -53,8 +53,8 @@ const HEADER_HEIGHT = 110;
 const PRIZES = [
   { label: '10kc', roleId:  null },
   { label: '10kc', roleId: null },
-  { label: '25kc', roleId: null },
-  { label: '35kc', roleId: null },
+  { label: '15kc', roleId: null },
+  { label: '30kc', roleId: null },
   { label: 'Try again', roleId: null },
   { label: 'VIP', roleId: null },
   // Si luego quieres usar VIP, agrégalo aquí:
@@ -264,7 +264,7 @@ async function renderBoard(game, { reveal = false } = {}) {
           text = 'VIP';
           font = '30px Anton';
         } //Agrege una nueva celda de "Try again"
-        if (cell.label === 'Try again') {
+        else if (cell.label === 'Try again') {
           fill = selected ? '#16a34a' : '#116a87';
           border = selected ? '#dcfce7' : '#dcfce7';
           text = 'Try again';
