@@ -263,12 +263,18 @@ async function renderBoard(game, { reveal = false } = {}) {
           border = selected ? '#facc15' : '#eab308';
           text = 'VIP';
           font = '30px Anton';
+        } //Agrege una nueva celda de "Try again"
+        if (cell.label === 'Try again') {
+          fill = selected ? '#16a34a' : '#116a87';
+          border = selected ? '#dcfce7' : '#dcfce7';
+          text = 'Try again';
+          font = '26px Anton';
         } else {
           fill = selected ? '#16a34a' : '#2f6df6';
           border = selected ? '#dcfce7' : '#e5efff';
           text = cell.label;
           font = '28px Anton';
-        }
+        } 
       } else {
         fill = selected ? '#991b1b' : '#4b5563';
         border = selected ? '#fecaca' : '#f3f4f6';
