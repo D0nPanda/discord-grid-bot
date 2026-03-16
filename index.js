@@ -51,9 +51,9 @@ const PADDING = 24;
 const HEADER_HEIGHT = 110;
 
 const PRIZES = [
-  { label: '5%', roleId:  null },
-  { label: '10%', roleId: null },
-  { label: '15%', roleId: null },
+  { label: '10kc', roleId:  null },
+  { label: '20kc', roleId: null },
+  { label: '35kc', roleId: null },
   { label: 'VIP', roleId: null },
   // Si luego quieres usar VIP, agrégalo aquí:
   // { label: 'VIP', roleId: ROLE_VIP || null },
