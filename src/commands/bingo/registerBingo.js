@@ -2,8 +2,8 @@ const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
 // Asegúrate de importar correctamente el archivo que maneja la autenticación
-const { auth } = require('../infrastructure/googleSheetsClient'); // Ruta ajustada según tu estructura
-const { getGoogleSheetsClient } = require('./googleSheetsClient');
+const { getGoogleSheetsClient } = require('../infrastructure/googleSheetsClient'); // Ruta ajustada según tu estructura
+
 module.exports = {
   data: {
     name: 'registerbingo',
@@ -69,10 +69,10 @@ module.exports = {
         },
       });
 
-      return interaction.reply('Data successfully added to the sheet!');
+      return interaction.reply('Data successfully added to the sheet');
     } catch (error) {
       console.error('Error adding data:', error);
-      return interaction.reply('Data wasn\'t added to the sheet. Please try again.');
+      return interaction.reply('Data was not added to the sheet. Please try again.');
     }
   },
 };
