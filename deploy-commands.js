@@ -13,6 +13,42 @@ if (!CLIENT_ID) {
 
 const commands = [
   {
+    name: 'registerbingo',
+    description: 'Registra un nuevo pedido en la hoja de Google Sheets',
+    options: [
+      {
+        name: 'customer_id',
+        description: 'ID del Cliente',
+        type: 3,  // STRING
+        required: true,
+      },
+      {
+        name: 'order_id',
+        description: 'ID del Pedido',
+        type: 3,  // STRING
+        required: true,
+      },
+      {
+        name: 'category',
+        description: 'Categoría del Pedido',
+        type: 3,  // STRING
+        required: true,
+      },
+      {
+        name: 'quantity',
+        description: 'Cantidad del Pedido',
+        type: 4,  // INTEGER
+        required: true,
+      },
+      {
+        name: 'total',
+        description: 'Total del Pedido',
+        type: 10,  // NUMBER (decimal)
+        required: true,
+      },
+    ],
+  },
+  {
     name: 'promo',
     description: 'Genera una cuadrícula de descuento para un cliente',
     options: [
@@ -32,42 +68,6 @@ const commands = [
         name: 'user',
         description: 'Cliente al que quieres consultar',
         type: 6,
-        required: true,
-      },
-    ],
-  },
-  {
-    name: 'registerbingo',
-    description: 'Record bingo data in Google Sheets',
-    options: [
-      {
-        name: 'customer-id',
-        description: 'Customer ID ',
-        type: 3, 
-        required: true,
-      },
-      {
-        name: 'order-id',
-        description: 'Order ID ',
-        type: 3, 
-        required: true,
-      },
-      {
-        name: 'category',
-        description: 'Order category',
-        type: 3, 
-        required: true,
-      },
-      {
-        name: 'quantity',
-        description: 'Order amount',
-        type: 4, 
-        required: true,
-      },
-      {
-        name: 'total',
-        description: 'Total amount paid',
-        type: 4, 
         required: true,
       },
     ],
