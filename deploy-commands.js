@@ -36,6 +36,42 @@ const commands = [
       },
     ],
   },
+  {
+    name: 'registerbingo',
+    description: 'Record bingo data in Google Sheets',
+    options: [
+      {
+        name: 'customer-id',
+        description: 'Customer ID ',
+        type: 3, 
+        required: true,
+      },
+      {
+        name: 'order-id',
+        description: 'Order ID ',
+        type: 3, 
+        required: true,
+      },
+      {
+        name: 'category',
+        description: 'Order category',
+        type: 3, 
+        required: true,
+      },
+      {
+        name: 'quantity',
+        description: 'Order amount',
+        type: 4, 
+        required: true,
+      },
+      {
+        name: 'total',
+        description: 'Total amount paid',
+        type: 4, 
+        required: true,
+      },
+    ],
+  },
 ];
 
 const rest = new REST({ version: '10' }).setToken(DISCORD_TOKEN);
