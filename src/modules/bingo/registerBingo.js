@@ -5,6 +5,7 @@ module.exports = {
   name: 'registerbingo',
   description: 'Record bingo data in Google Sheets',
   async execute(message, args) {
+    console.log('Comando recibido:', args);
     if (!message.member.hasPermission('ADMINISTRATOR')) {
       return message.reply("You don't have permission to execute this command.");
     }
@@ -17,6 +18,7 @@ module.exports = {
     const total = args[4];
 
     try {
+        console.log('Datos obtenidos:', { customerId, orderId, category, quantity, total });
       // Autenticación con Google Sheets
       const sheets = google.sheets({ version: 'v4', auth: await authenticateGoogleSheets() });
 
