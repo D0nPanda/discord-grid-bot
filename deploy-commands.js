@@ -18,32 +18,32 @@ const commands = [
     options: [
       {
         name: 'customer_id',
+        type: 'STRING',
         description: 'ID del Cliente',
-        type: 3,  // STRING
         required: true,
       },
       {
         name: 'order_id',
+        type: 'STRING',
         description: 'ID del Pedido',
-        type: 3,  // STRING
         required: true,
       },
       {
         name: 'category',
-        description: 'Categoría del Pedido',
-        type: 3,  // STRING
+        type: 'STRING',
+        description: 'Categoría del Pedido (PvM Low, PvM Mid, etc.)',
         required: true,
       },
       {
         name: 'quantity',
+        type: 'INTEGER',
         description: 'Cantidad del Pedido',
-        type: 4,  // INTEGER
         required: true,
       },
       {
         name: 'total',
+        type: 'NUMBER',
         description: 'Total del Pedido',
-        type: 10,  // NUMBER (decimal)
         required: true,
       },
     ],
