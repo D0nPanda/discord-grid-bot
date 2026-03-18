@@ -46,7 +46,7 @@ module.exports = {
     const order_id = interaction.options.getString('order_id');
     const category = interaction.options.getString('category');
     const quantity = interaction.options.getInteger('quantity');
-    const total = interaction.options.getString('total');
+    const total = interaction.options.getNumber('total');
 
     // Validar que el 'category' esté en las opciones permitidas
     const validCategories = ['PvM Low', 'PvM Mid', 'PvM High', 'Questing', 'Diary', 'Minigame', 'Powerleveling'];
