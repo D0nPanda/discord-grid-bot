@@ -2,8 +2,8 @@ const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
 // Asegúrate de importar correctamente el archivo que maneja la autenticación
-const { auth } = require('../infrastructure/googleSheetsClient'); // Ruta ajustada según tu estructura
-
+//const { auth } = require('../infrastructure/googleSheetsClient'); // Ruta ajustada según tu estructura
+const { getGoogleSheetsClient } = require('./googleSheetsClient');
 module.exports = {
   data: {
     name: 'registerbingo',
