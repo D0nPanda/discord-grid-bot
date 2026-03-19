@@ -17,7 +17,7 @@ const commands = [
     description: 'Registra un nuevo pedido en la hoja de Google Sheets',
     options: [
       {
-        name: 'target_user',
+        name: 'customer_id',
         type: 6, 
         description: 'ID del Cliente',
         required: true,
