@@ -59,7 +59,7 @@ module.exports = {
     const category = interaction.options.getString('category'); // Aquí obtenemos la categoría seleccionada
     const quantity = interaction.options.getInteger('quantity');
     const total = interaction.options.getNumber('total'); // Asegúrate de que sea un número
-    const customer_id = targetUser.id;
+    const customer_id = target_user.id;
 
     console.log("Received parameters:", customer_id, order_id, category, quantity, total);
 
