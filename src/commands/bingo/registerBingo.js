@@ -75,7 +75,7 @@ module.exports = {
 
     const request = {
       spreadsheetId: '1cnvF1AbQBDB3YacOp_UsVUDdUXzXEmsEjhrzmDeXNac', // Reemplaza con tu ID de hoja
-      range: 'Orders_Table!A1:E1', // Reemplaza con el rango adecuado
+      range: 'Orders!A1:E1', // Reemplaza con el rango adecuado
       valueInputOption: 'RAW',
       resource: {
         values: [
