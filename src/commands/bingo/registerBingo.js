@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
 const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
-const { auth } = require('../../modules/bingo/infrastructure/googleSheetsClient');
+const { getGoogleSheetsClient } = require('../../modules/bingo/infrastructure/googleSheetsClient');
 
 module.exports = {
   data: {
