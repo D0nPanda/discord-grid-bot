@@ -103,14 +103,14 @@ module.exports = {
 
       // Responder al usuario
       await interaction.reply({
-        content: `Pedido registrado con éxito para ${target_user.username} en la categoría ${category}.`,
+        content: `Order successfully registered for ${target_user.username} in the ${category} category.`,
         ephemeral: true,
       });
 
     } catch (error) {
       console.error('Error inserting data into Google Sheets:', error);
       await interaction.reply({
-        content: 'Hubo un error al registrar tu pedido.',
+        content: 'There was an error processing your order.',
         ephemeral: true,
       });
     }
