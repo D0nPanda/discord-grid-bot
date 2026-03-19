@@ -1,8 +1,8 @@
 const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
-// Asegúrate de importar correctamente el archivo que maneja la autenticación
-const { auth } = require('../../infrastructure/googleSheetsClient'); // Ruta ajustada según tu estructura
+const path = require('path');
+const { auth } = require(path.resolve(__dirname, '../../infrastructure/googleSheetsClient'));
 
 module.exports = {
   data: {
