@@ -54,7 +54,7 @@ module.exports = {
     console.log("Command received: registerbingo");
 
     // Obtener los parámetros de la interacción
-    const target_user = interaction.options.getUser('target_user');
+    const target_user = interaction.options.getUser('target_user',true);
     const order_id = interaction.options.getString('order_id');
     const category = interaction.options.getString('category'); // Aquí obtenemos la categoría seleccionada
     const quantity = interaction.options.getInteger('quantity');
