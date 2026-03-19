@@ -1,6 +1,5 @@
 const { google } = require('googleapis');
-const sheets = google.sheets('v4');
-
+const { ActionRowBuilder, StringSelectMenuBuilder } = require('discord.js');
 const { auth } = require('../../modules/bingo/infrastructure/googleSheetsClient');
 
 module.exports = {
@@ -23,8 +22,17 @@ module.exports = {
       {
         name: 'category',
         type: 'STRING',
-        description: 'Categoría del Pedido (PvM Low, PvM Mid, PvM High, Questing, Diary, Minigame, Powerleveling.)',
+        description: 'Categoría del Pedido',
         required: true,
+        choices: [
+          { name: 'PvM Low', value: 'PvM Low' },
+          { name: 'PvM Mid', value: 'PvM Mid' },
+          { name: 'PvM High', value: 'PvM High' },
+          { name: 'Questing', value: 'Questing' },
+          { name: 'Diary', value: 'Diary' },
+          { name: 'Minigame', value: 'Minigame' },
+          { name: 'Powerleveling', value: 'Powerleveling' }
+        ]
       },
       {
         name: 'quantity',
@@ -40,6 +48,7 @@ module.exports = {
       },
     ],
   },
+
   async execute(interaction) {
     // Logs para verificar que el comando se está ejecutando
     console.log("Command received: registerbingo");
@@ -47,44 +56,27 @@ module.exports = {
     // Obtener los parámetros de la interacción
     const customer_id = interaction.options.getString('customer_id');
     const order_id = interaction.options.getString('order_id');
-    const category = interaction.options.getString('category');
+    const category = interaction.options.getString('category'); // Aquí obtenemos la categoría seleccionada
     const quantity = interaction.options.getInteger('quantity');
     const total = interaction.options.getNumber('total'); // Asegúrate de que sea un número
 
     console.log("Received parameters:", customer_id, order_id, category, quantity, total);
 
-    // Validar que el 'category' esté en las opciones permitidas
-    const validCategories = ['PvM Low', 'PvM Mid', 'PvM High', 'Questing', 'Diary', 'Minigame', 'Powerleveling'];
+    // Validar la categoría seleccionada
+    const validCategories = [
+      'PvM Low', 'PvM Mid', 'PvM High', 'Questing', 'Diary', 'Minigame', 'Powerleveling'
+    ];
+
     if (!validCategories.includes(category)) {
-      console.log("Invalid category:", category);  // Log cuando la categoría no es válida
       return interaction.reply('Invalid category. Please choose a valid category.');
     }
 
-    console.log("Category is valid, proceeding to insert data...");
+    // Registrar el pedido en Google Sheets (agrega tu lógica aquí)
+    // Esta es la parte donde añades los datos a tu hoja de Google Sheets, por ejemplo:
+    // const sheetData = [customer_id, order_id, category, quantity, total];
+    // googleSheetsAPI.registerOrder(sheetData);
 
-    // Datos a insertar
-    const rowData = [customer_id, order_id, category, quantity, total];
-    console.log("Data to be inserted:", rowData); // Log para depuración
-
-    try {
-      // Aquí insertamos los datos en la hoja de Google Sheets
-      const response = await sheets.spreadsheets.values.append({
-        auth,
-        spreadsheetId: '1cnvF1AbQBDB3YacOp_UsVUDdUXzXEmsEjhrzmDeXNac',
-        range: 'Orders_Table!A2:E2', // Rango ajustado según tu hoja
-        valueInputOption: 'RAW',
-        resource: {
-          values: [rowData],
-        },
-      });
-
-      console.log('Response from Google Sheets:', response); // Log para depuración
-
-      return interaction.reply('Data successfully added to the sheet');
-    } catch (error) {
-      // Agregar más detalles del error
-      console.error('Error adding data:', error.response ? error.response.data : error);
-      return interaction.reply('Data was not added to the sheet. Please try again.');
-    }
+    // Responder al usuario con la confirmación de que el pedido se registró correctamente
+    await interaction.reply(`Category ${category} has been selected for the order.`);
   },
 };

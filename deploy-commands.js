@@ -18,31 +18,40 @@ const commands = [
     options: [
       {
         name: 'customer_id',
-        type: 'STRING',
+        type: 3, // STRING
         description: 'ID del Cliente',
         required: true,
       },
       {
         name: 'order_id',
-        type: 'STRING',
+        type: 3, // STRING
         description: 'ID del Pedido',
         required: true,
       },
       {
         name: 'category',
-        type: 'STRING',
-        description: 'Categoría del Pedido (PvM Low, PvM Mid, etc.)',
+        type: 3, // STRING
+        description: 'Categoría del Pedido',
         required: true,
+        choices: [
+          { name: 'PvM Low', value: 'PvM Low' },
+          { name: 'PvM Mid', value: 'PvM Mid' },
+          { name: 'PvM High', value: 'PvM High' },
+          { name: 'Questing', value: 'Questing' },
+          { name: 'Diary', value: 'Diary' },
+          { name: 'Minigame', value: 'Minigame' },
+          { name: 'Powerleveling', value: 'Powerleveling' }
+        ]
       },
       {
         name: 'quantity',
-        type: 'INTEGER',
+        type: 4, // INTEGER
         description: 'Cantidad del Pedido',
         required: true,
       },
       {
         name: 'total',
-        type: 'NUMBER',
+        type: 10, // NUMBER
         description: 'Total del Pedido',
         required: true,
       },
