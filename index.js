@@ -440,6 +440,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
           ephemeral: true,
         });
       }
+    }
 
       const staffRoleId = getStaffRoleIdForGuild(interaction.guild.id);
 
