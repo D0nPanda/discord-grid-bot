@@ -24,7 +24,7 @@ module.exports = {
       {
         name: 'category',
         type: 'STRING',
-        description: 'Categoría del Pedido (PvM Low, PvM Mid, etc.)',
+        description: 'Categoría del Pedido (PvM Low, PvM Mid, PvM High, Questing, Diary, Minigame, Powerleveling.)',
         required: true,
       },
       {
