@@ -3,7 +3,7 @@ require('dotenv').config();
 const crypto = require('node:crypto');
 const path = require('node:path');
 const fs = require('node:fs');
-const registerBingoCommand = require('./src/commands/bingo/registerBingo');
+const registerBingoCommand = require('./commands/bingo/registerBingo');
 const { handleTrackgridCommand } = require('./src/commands/bingo/trackgrid');
 const {
   ActionRowBuilder,
@@ -437,7 +437,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
       await registerBingoCommand.execute(interaction);
       return;
     }
-    
+
     if (
       interaction.isChatInputCommand() &&
       interaction.commandName === 'promo'
