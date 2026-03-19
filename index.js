@@ -458,11 +458,11 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
       }
 
-      const targetUser = interaction.options.getUser('user', true);
+      const targetUser = interaction.options.getUser('target_user', true);
 
       if (targetUser.bot) {
         return interaction.reply({
-          content: 'There is no point in checking grid progress for another bot.',
+          content: 'There is no point assigning orders for another bot.',
           ephemeral: true,
         });
       }
