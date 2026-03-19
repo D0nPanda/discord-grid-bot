@@ -103,7 +103,7 @@ module.exports = {
 
       // Responder al usuario
       await interaction.reply({
-        content: `Order successfully registered for ${target_user.username} in the ${category} category.`,
+        content: `Order successfully registered`,
         ephemeral: true,
       });
 
