@@ -430,20 +430,21 @@ client.once(Events.ClientReady, (readyClient) => {
 
 client.on(Events.InteractionCreate, async (interaction) => {
   try {
+    // Solo si es el comando 'registerbingo', procesar la interacción
     if (
       interaction.isChatInputCommand() &&
       interaction.commandName === 'registerbingo'
     ) {
+      // Verificar si la interacción es dentro de un servidor
       if (!interaction.inGuild()) {
         return interaction.reply({
           content: 'This command only works within a server.',
           ephemeral: true,
         });
       }
-    }
 
+      // Obtener el rol de staff para la guild
       const staffRoleId = getStaffRoleIdForGuild(interaction.guild.id);
-
       if (!staffRoleId) {
         return interaction.reply({
           content: 'This server is not configured to use this command.',
@@ -451,6 +452,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
       }
 
+      // Verificar si el usuario tiene el rol de staff
       if (!interaction.member.roles.cache.has(staffRoleId)) {
         return interaction.reply({
           content: 'You do not have permission to use this command.',
@@ -458,18 +460,20 @@ client.on(Events.InteractionCreate, async (interaction) => {
         });
       }
 
+      // Obtener el usuario objetivo
       const targetUser = interaction.options.getUser('target_user', true);
-
       if (targetUser.bot) {
         return interaction.reply({
           content: 'There is no point assigning orders for another bot.',
           ephemeral: true,
         });
       }
-      {
+
+      // Después de pasar todas las validaciones, ejecutar el comando
       await registerBingoCommand.execute(interaction);
       return;
     }
+  
 
     if (
       interaction.isChatInputCommand() &&
