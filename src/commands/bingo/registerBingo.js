@@ -8,9 +8,9 @@ module.exports = {
     description: 'Registra un nuevo pedido en la hoja de Google Sheets',
     options: [
       {
-        name: 'customer_id',
-        type: 'STRING',
-        description: 'ID del Cliente',
+        name: 'target_user',
+        type: 'USER',
+        description: 'Usuario objetivo (para asignar al pedido)',
         required: true,
       },
       {
@@ -56,9 +56,9 @@ module.exports = {
     // Obtener los parámetros de la interacción
     const target_user = interaction.options.getUser('target_user');
     const order_id = interaction.options.getString('order_id');
-    const category = interaction.options.getString('category'); // Aquí obtenemos la categoría seleccionada
+    const category = interaction.options.getString('category');
     const quantity = interaction.options.getInteger('quantity');
-    const total = interaction.options.getNumber('total'); // Asegúrate de que sea un número
+    const total = interaction.options.getNumber('total');
     const customer_id = target_user.id;
 
     console.log("Received parameters:", customer_id, order_id, category, quantity, total);
@@ -72,32 +72,45 @@ module.exports = {
       return interaction.reply('Invalid category. Please choose a valid category.');
     }
 
-   const sheets = getGoogleSheetsClient();
-
-    const request = {
-      spreadsheetId: '1cnvF1AbQBDB3YacOp_UsVUDdUXzXEmsEjhrzmDeXNac', // Reemplaza con tu ID de hoja
-      range: 'Orders!A2:E', // Reemplaza con el rango adecuado
-      valueInputOption: 'RAW',
-      resource: {
-        values: [
-          [customer_id, order_id, category, quantity, total],
-        ],
-      },
-    };
+    const sheets = getGoogleSheetsClient();
+    const spreadsheetId = '1cnvF1AbQBDB3YacOp_UsVUDdUXzXEmsEjhrzmDeXNac'; // ID de la hoja de cálculo
+    const range = 'Orders!A2:E'; // Rango para agregar datos (se empieza desde la fila 2 para evitar sobreescribir los encabezados)
 
     try {
+      // Obtener los datos actuales en el rango (A2:E)
+      const response = await sheets.spreadsheets.values.get({
+        spreadsheetId,
+        range,
+      });
+
+      // Obtener la última fila usada
+      const rows = response.data.values || [];
+      const nextRow = rows.length + 2; // Calcula la siguiente fila vacía para agregar los datos
+
+      const request = {
+        spreadsheetId,
+        range: `Orders!A${nextRow}:E${nextRow}`, // Utiliza la siguiente fila vacía
+        valueInputOption: 'RAW',
+        resource: {
+          values: [
+            [customer_id, order_id, category, quantity, total],
+          ],
+        },
+      };
+
       // Insertar los datos en la hoja de Google Sheets
-      await sheets.spreadsheets.values.append(request);
+      await sheets.spreadsheets.values.update(request);
 
       // Responder al usuario
       await interaction.reply({
-        content: `Category ${category} has been selected for the order.`,
+        content: `Pedido registrado con éxito para ${target_user.username} en la categoría ${category}.`,
         ephemeral: true,
       });
+
     } catch (error) {
       console.error('Error inserting data into Google Sheets:', error);
       await interaction.reply({
-        content: 'There was an error registering your order.',
+        content: 'Hubo un error al registrar tu pedido.',
         ephemeral: true,
       });
     }
