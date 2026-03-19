@@ -71,17 +71,34 @@ module.exports = {
       return interaction.reply('Invalid category. Please choose a valid category.');
     }
 
-    // Registrar el pedido en Google Sheets (agrega tu lógica aquí)
-    // Esta es la parte donde añades los datos a tu hoja de Google Sheets, por ejemplo:
-    // const sheetData = [customer_id, order_id, category, quantity, total];
-    // googleSheetsAPI.registerOrder(sheetData);
+   const sheets = google.sheets({ version: 'v4', auth });
 
-    // Responder al usuario con la confirmación de que el pedido se registró correctamente
-    
-  await interaction.reply({
-      content: `Category ${category} has been selected for the order.`,
-      ephemeral: true, 
-    })
-  
+    const request = {
+      spreadsheetId: 'TU_SPREADSHEET_ID', // Reemplaza con tu ID de hoja
+      range: 'Orders_Table!A1:E1', // Reemplaza con el rango adecuado
+      valueInputOption: 'RAW',
+      resource: {
+        values: [
+          [customer_id, order_id, category, quantity, total],
+        ],
+      },
+    };
+
+    try {
+      // Insertar los datos en la hoja de Google Sheets
+      await sheets.spreadsheets.values.append(request);
+
+      // Responder al usuario
+      await interaction.reply({
+        content: `Category ${category} has been selected for the order.`,
+        ephemeral: true,
+      });
+    } catch (error) {
+      console.error('Error inserting data into Google Sheets:', error);
+      await interaction.reply({
+        content: 'There was an error registering your order.',
+        ephemeral: true,
+      });
+    }
   }
 };
