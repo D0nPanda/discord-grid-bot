@@ -1,8 +1,7 @@
 const { google } = require('googleapis');
 const sheets = google.sheets('v4');
 
-const path = require('path');
-const { auth } = require(path.resolve(__dirname, '../../infrastructure/googleSheetsClient'));
+const { auth } = require('../../modules/bingo/infrastructure/googleSheetsClient');
 
 module.exports = {
   data: {
