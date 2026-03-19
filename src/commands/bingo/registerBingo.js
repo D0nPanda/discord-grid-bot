@@ -71,7 +71,7 @@ module.exports = {
       return interaction.reply('Invalid category. Please choose a valid category.');
     }
 
-   const sheets = google.sheets({ version: 'v4', auth });
+   const sheets = getGoogleSheetsClient();
 
     const request = {
       spreadsheetId: '1cnvF1AbQBDB3YacOp_UsVUDdUXzXEmsEjhrzmDeXNac', // Reemplaza con tu ID de hoja
