@@ -77,6 +77,11 @@ module.exports = {
     // googleSheetsAPI.registerOrder(sheetData);
 
     // Responder al usuario con la confirmación de que el pedido se registró correctamente
-    await interaction.reply(`Category ${category} has been selected for the order.`);
-  },
+    
+  await interaction.reply({
+      content: `Category ${category} has been selected for the order.`,
+      ephemeral: true, 
+    })
+  
+  }
 };
